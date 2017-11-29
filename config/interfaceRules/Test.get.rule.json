@@ -1,0 +1,12 @@
+{
+  "request": {
+    "keywords": "",
+    "catId|100000-999999": 1
+  },
+  "response": {
+    "id|1000-9999": 1
+  },
+  "responseError": {
+    "CODE": "5301"
+  }
+}
