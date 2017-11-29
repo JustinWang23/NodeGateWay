@@ -57,7 +57,8 @@
         "urls": {
             "online": "http://httpbin.org/get"
         },
-        "method": "get"
+        "method": "get",
+        "status": "mock"
     }  ],
     "combo": {
         "getMyData": [ "Cart.getCart", "Search.suggest" ]
