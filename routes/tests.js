@@ -4,12 +4,29 @@ var path = require('path');
 
 // 引入模块
 var ModelProxy = require( 'modelproxy-copy' );
-ModelProxy.init( path.resolve(__dirname, '../config/interface.json') );
+ModelProxy.init( path.resolve(__dirname, '../configs/interface.json') );
 
 // 更多创建方式，请参考后文API
 var model = new ModelProxy( 'Test.*' );
 
 /* GET test listing. */
+router.get("/get/:id/", function (req, res, next) {
+
+	model.get( { id: req.params.id } )
+	    .done( function( data ) {
+	        res.status(200).json({data: data})
+	    } )
+	    .error( function( err ) {
+        	console.log( err );
+    	} );
+});
+
+router.get("/getFile/:filename", function (req, res, next) {
+	res.sendFile( path.resolve(__dirname, "../uploads/"+req.params.filename), function (err) {
+		next(err)
+	} )
+});
+
 router.get("/:user/:gender", function (req, res, next) {
 	var params = req.params;
 
@@ -29,17 +46,6 @@ router.get("/:user/", function (req, res, next) {
 
 	// 合并请求
 	model.post( { name: params.user} )
-	    .done( function( data ) {
-	        res.status(200).json({data: data})
-	    } )
-	    .error( function( err ) {
-        	console.log( err );
-    	} );
-});
-
-router.get("/get/:id/:user", function (req, res, next) {
-
-	model.get( { id: req.params.id } )
 	    .done( function( data ) {
 	        res.status(200).json({data: data})
 	    } )
