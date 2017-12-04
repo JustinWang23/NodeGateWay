@@ -1,0 +1,22 @@
+{
+	"entryPage" : "login.html",
+    "version" : 11,
+    "clientVersion":"1.6.2",
+	"router" : {
+    },
+    "tabIndex" : "index.html",
+    "tabPages" : [{
+        "title" : "通讯录",
+        "icon" : "images/contract.png",
+        "selecticon" : "images/contractselect.png"
+    },{
+        "title" : "首页",
+        "icon" : "images/home.png",
+        "selecticon" : "images/homeselect.png"
+    },{
+        "title" : "我的",
+        "icon" : "images/me.png",
+        "selecticon" : "images/meselect.png"
+    }],
+    "updateUrl" : "https://homeapp.noahwm.com/homepush/"
+}
