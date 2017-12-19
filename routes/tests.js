@@ -4,9 +4,19 @@ var path = require('path');
 var fs = require('fs');
 var multer  = require('multer')
 
+var ATTACH_UPLAOD_PATH = path.resolve(__dirname, "../uploads/")
+var INTERFACE_CONFIG_PATH = path.resolve(__dirname, '../configs/interface.json')
+
+// 引入模块
+var ModelProxy = require( 'modelproxy-copy' );
+ModelProxy.init( INTERFACE_CONFIG_PATH );
+
+// 更多创建方式，请参考后文API
+var model = new ModelProxy( 'Test.*' );
+
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.resolve(__dirname, "../uploads/"))
+    cb(null, ATTACH_UPLAOD_PATH)
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname)
@@ -35,13 +45,6 @@ function fileFilter (req, file, cb) {
 
 var upload = multer({ storage: storage, limits: limits, fileFilter: fileFilter })
 
-// 引入模块
-var ModelProxy = require( 'modelproxy-copy' );
-ModelProxy.init( path.resolve(__dirname, '../configs/interface.json') );
-
-// 更多创建方式，请参考后文API
-var model = new ModelProxy( 'Test.*' );
-
 /* GET test listing. */
 router.get("/get/:id/", function (req, res, next) {
 
@@ -55,14 +58,14 @@ router.get("/get/:id/", function (req, res, next) {
 });
 
 router.get("/getFile/:filename", function (req, res, next) {
-	res.sendFile( path.resolve(__dirname, "../uploads/"+req.params.filename), function (err) {
+	res.sendFile( ATTACH_UPLAOD_PATH + req.params.filename, function (err) {
 		next(err)
 	} )
 });
 
 router.post("/uploadFile", upload.single('thumbnail'), function (req, res, next) {
 
-	res.send('File uploaded to: ' + req.file.path + ' - ' + req.file.size + ' bytes');
+	res.send(`File uploaded to: ${req.file.path} - ${req.file.size} bytes - verison: ${req.body.version}`);
 });
 
 router.get("/test.html", function (req, res, next) {
